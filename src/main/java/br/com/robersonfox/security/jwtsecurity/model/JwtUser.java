@@ -1,4 +1,4 @@
-package com.techprimers.security.jwtsecurity.model;
+package br.com.robersonfox.security.jwtsecurity.model;
 
 public class JwtUser {
     private String userName;

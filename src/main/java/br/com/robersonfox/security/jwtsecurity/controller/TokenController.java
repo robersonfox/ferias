@@ -1,11 +1,12 @@
-package com.techprimers.security.jwtsecurity.controller;
+package br.com.robersonfox.security.jwtsecurity.controller;
 
-import com.techprimers.security.jwtsecurity.model.JwtUser;
-import com.techprimers.security.jwtsecurity.security.JwtGenerator;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.robersonfox.security.jwtsecurity.model.JwtUser;
+import br.com.robersonfox.security.jwtsecurity.security.JwtGenerator;
 
 @RestController
 @RequestMapping("/token")

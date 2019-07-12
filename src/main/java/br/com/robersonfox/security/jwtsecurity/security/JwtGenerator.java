@@ -1,10 +1,11 @@
-package com.techprimers.security.jwtsecurity.security;
+package br.com.robersonfox.security.jwtsecurity.security;
 
-import com.techprimers.security.jwtsecurity.model.JwtUser;
+import org.springframework.stereotype.Component;
+
+import br.com.robersonfox.security.jwtsecurity.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
 
 @Component
 public class JwtGenerator {

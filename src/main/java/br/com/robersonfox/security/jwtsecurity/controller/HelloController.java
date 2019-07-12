@@ -1,4 +1,4 @@
-package com.techprimers.security.jwtsecurity.controller;
+package br.com.robersonfox.security.jwtsecurity.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

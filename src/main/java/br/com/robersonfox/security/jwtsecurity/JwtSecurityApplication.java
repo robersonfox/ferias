@@ -1,4 +1,4 @@
-package com.techprimers.security.jwtsecurity;
+package br.com.robersonfox.security.jwtsecurity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

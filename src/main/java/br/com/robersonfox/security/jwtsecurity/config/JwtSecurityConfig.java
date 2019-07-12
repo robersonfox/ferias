@@ -1,9 +1,7 @@
-package com.techprimers.security.jwtsecurity.config;
+package br.com.robersonfox.security.jwtsecurity.config;
 
-import com.techprimers.security.jwtsecurity.security.JwtAuthenticationEntryPoint;
-import com.techprimers.security.jwtsecurity.security.JwtAuthenticationProvider;
-import com.techprimers.security.jwtsecurity.security.JwtAuthenticationTokenFilter;
-import com.techprimers.security.jwtsecurity.security.JwtSuccessHandler;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Collections;
+import br.com.robersonfox.security.jwtsecurity.security.JwtAuthenticationEntryPoint;
+import br.com.robersonfox.security.jwtsecurity.security.JwtAuthenticationProvider;
+import br.com.robersonfox.security.jwtsecurity.security.JwtAuthenticationTokenFilter;
+import br.com.robersonfox.security.jwtsecurity.security.JwtSuccessHandler;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
