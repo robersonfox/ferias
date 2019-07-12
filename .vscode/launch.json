@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-JwtSecurityApplication<vocation>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.com.robersonfox.security.jwtsecurity.JwtSecurityApplication",
+            "projectName": "vocation",
+            "args": ""
+        }
+    ]
+}
