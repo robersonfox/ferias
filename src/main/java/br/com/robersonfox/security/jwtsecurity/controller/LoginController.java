@@ -58,7 +58,7 @@ public class LoginController {
 
             return ResponseEntity.status(HttpStatus.OK).header("Autorization", "Token " + jwt).build();
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN) .build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 }

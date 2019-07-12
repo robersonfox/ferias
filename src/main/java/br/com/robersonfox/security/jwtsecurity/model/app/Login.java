@@ -101,8 +101,8 @@ public class Login implements Serializable {
         if (!(o instanceof Login)) {
             return false;
         }
-        Login login = (Login) o;
-        return Objects.equals(id, login.id) && Objects.equals(login, login.login) && Objects.equals(senha, login.senha) && Objects.equals(pessoa, login.pessoa);
+        Login l = (Login) o;
+        return Objects.equals(id, l.id) && Objects.equals(login, l.login) && Objects.equals(senha, l.senha) && Objects.equals(pessoa, l.pessoa);
     }
 
     @Override
