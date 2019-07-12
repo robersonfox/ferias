@@ -44,12 +44,14 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "equipe_id")
     private Equipe equipe;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "grupo_id")
+    private Grupo grupo;
 
     public Pessoa() {
     }
 
-    public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, Date dataContratacao, FotoFuncionario foto, Equipe equipe) {
+    public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, Date dataContratacao, FotoFuncionario foto, Equipe equipe, Grupo grupo) {
         this.id = id;
         this.matricula = matricula;
         this.nome = nome;
@@ -58,6 +60,7 @@ public class Pessoa implements Serializable {
         this.dataContratacao = dataContratacao;
         this.foto = foto;
         this.equipe = equipe;
+        this.grupo = grupo;
     }
 
     public Long getId() {
@@ -124,6 +127,14 @@ public class Pessoa implements Serializable {
         this.equipe = equipe;
     }
 
+    public Grupo getGrupo() {
+        return this.grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+
     public Pessoa id(Long id) {
         this.id = id;
         return this;
@@ -164,6 +175,11 @@ public class Pessoa implements Serializable {
         return this;
     }
 
+    public Pessoa grupo(Grupo grupo) {
+        this.grupo = grupo;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -172,12 +188,12 @@ public class Pessoa implements Serializable {
             return false;
         }
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(id, pessoa.id) && Objects.equals(matricula, pessoa.matricula) && Objects.equals(nome, pessoa.nome) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(dataContratacao, pessoa.dataContratacao) && Objects.equals(foto, pessoa.foto) && Objects.equals(equipe, pessoa.equipe);
+        return Objects.equals(id, pessoa.id) && Objects.equals(matricula, pessoa.matricula) && Objects.equals(nome, pessoa.nome) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(dataContratacao, pessoa.dataContratacao) && Objects.equals(foto, pessoa.foto) && Objects.equals(equipe, pessoa.equipe) && Objects.equals(grupo, pessoa.grupo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, matricula, nome, dataNascimento, endereco, dataContratacao, foto, equipe);
+        return Objects.hash(id, matricula, nome, dataNascimento, endereco, dataContratacao, foto, equipe, grupo);
     }
 
     @Override
@@ -191,7 +207,9 @@ public class Pessoa implements Serializable {
             ", dataContratacao='" + getDataContratacao() + "'" +
             ", foto='" + getFoto() + "'" +
             ", equipe='" + getEquipe() + "'" +
+            ", grupo='" + getGrupo() + "'" +
             "}";
     }
+     
  
 }

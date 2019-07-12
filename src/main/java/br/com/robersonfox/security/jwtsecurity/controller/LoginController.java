@@ -52,7 +52,7 @@ public class LoginController {
             JwtUser jwtUser = new JwtUser();
             jwtUser.setId(login.getId());
             jwtUser.setUserName(login.getLogin());
-            jwtUser.setRole("user");
+            jwtUser.setRole(login.getPessoa().getGrupo().getNome());
             
             String jwt = jwtGenerator.generate(jwtUser);
 
