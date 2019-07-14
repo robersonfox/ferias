@@ -7,12 +7,15 @@
 
 package br.com.robersonfox.security.jwtsecurity.controller;
 
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -24,8 +27,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.robersonfox.security.jwtsecurity.helper.ZXingHelper;
 import br.com.robersonfox.security.jwtsecurity.model.app.Equipe;
 import br.com.robersonfox.security.jwtsecurity.model.app.Ferias;
 import br.com.robersonfox.security.jwtsecurity.model.app.Pessoa;
@@ -43,7 +48,7 @@ public class FeriasController {
     private PessoaRepo pessoaRepo;
 
     @PutMapping
-    public ResponseEntity<?> inserir(@RequestBody final Ferias ferias) {
+    public ResponseEntity<?> inserir(@RequestBody final Ferias ferias, HttpServletResponse response) {
         Date periodoInicial = ferias.getDataInicio();
         Date periodoFinal = ferias.getDataFim();
         Long idFuncionario = ferias.getPessoa().getId();
@@ -89,7 +94,7 @@ public class FeriasController {
         }
         
         Ferias resultado = feriasRepo.save(ferias);
-        
+                
         return ResponseEntity.status(HttpStatus.OK).body(resultado);
     }
     
@@ -136,4 +141,11 @@ public class FeriasController {
           .atZone(ZoneId.systemDefault())
           .toLocalDate();
     }
+    
+    @RequestMapping(value = "qrcode/{id}", method = RequestMethod.GET)
+	public void qrcode(@PathVariable("id") Long id, HttpServletResponse response) throws Exception {
+    	Ferias ferias = feriasRepo.findOne(id);
+    	
+    	ZXingHelper.getPNG(ferias.toString(), response);
+	}
 }
