@@ -9,7 +9,6 @@ package br.com.robersonfox.security.jwtsecurity.model.app;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Ferias implements Serializable {
@@ -28,13 +29,13 @@ public class Ferias implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "pessoa_id")
+    @JsonIgnoreProperties({"ferias"})
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     private Pessoa pessoa;
 
     private Date dataInicio;
     private Date dataFim;
-
-
+    
     public Ferias() {
     }
 
@@ -45,82 +46,36 @@ public class Ferias implements Serializable {
         this.dataFim = dataFim;
     }
 
-    public Long getId() {
-        return this.id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Pessoa getPessoa() {
-        return this.pessoa;
-    }
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 
-    public Date getDataInicio() {
-        return this.dataInicio;
-    }
+	public Date getDataInicio() {
+		return dataInicio;
+	}
 
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
 
-    public Date getDataFim() {
-        return this.dataFim;
-    }
+	public Date getDataFim() {
+		return dataFim;
+	}
 
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
-    }
-
-    public Ferias id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Ferias pessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-        return this;
-    }
-
-    public Ferias dataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-        return this;
-    }
-
-    public Ferias dataFim(Date dataFim) {
-        this.dataFim = dataFim;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Ferias)) {
-            return false;
-        }
-        Ferias ferias = (Ferias) o;
-        return Objects.equals(id, ferias.id) && Objects.equals(pessoa, ferias.pessoa) && Objects.equals(dataInicio, ferias.dataInicio) && Objects.equals(dataFim, ferias.dataFim);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, pessoa, dataInicio, dataFim);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", pessoa='" + getPessoa() + "'" +
-            ", dataInicio='" + getDataInicio() + "'" +
-            ", dataFim='" + getDataFim() + "'" +
-            "}";
-    }
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	} 
 
 }
