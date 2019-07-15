@@ -7,7 +7,6 @@
 
 package br.com.robersonfox.security.jwtsecurity.controller;
 
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
