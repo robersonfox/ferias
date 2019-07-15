@@ -29,3 +29,5 @@ nbdist/
 .nb-gradle/
 error_hotspot.xml
 hs_err_pid*
+/.attach_pid29192
+/.vscode/

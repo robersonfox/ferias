@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,5 +53,10 @@ public class EquipeController {
     @GetMapping
     public ResponseEntity<List<Equipe>> getAll() {
         return ResponseEntity.ok(equipeRepo.findAll());
+    }
+
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<Equipe> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(equipeRepo.findOne(id));
     }
 }

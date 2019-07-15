@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "d3a3346a-a8a8-4cf6-b45f-514243d6d024",
+		"name": "JWT ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Criar Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userName\": \"Roberson Carlos Fox\",\n\t\"role\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "doLogin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSb2JlcnNvbiBDYXJsb3MgRm94IiwidXNlcklkIjoiMCIsInJvbGUiOiJhZG1pbiJ9.xCMRNCMzvjr_7aHwtTh3M5tJ2wln2OXOm6xXpSJQ_DE7IeDTTPEYcHXpH2AeeIDb57oCgQiJB-JigdzAQSFqiw",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"login\": \"robersonfox@gmail.com\",\n\t\"senha\": \"123456\"\n\t\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Testando o Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6InVzZXIifQ.EhmhKkXma4tAnvHm0PX6NoZJYvfnXl6eudKh5xGBWk7qijliitGn43Hq_VHixbeWvxEX2auauq5GFkmiC4rDYg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/pessoa",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir equipe",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSb2JlcnNvbiBDYXJsb3MgRm94IiwidXNlcklkIjoiMCIsInJvbGUiOiJhZG1pbiJ9.xCMRNCMzvjr_7aHwtTh3M5tJ2wln2OXOm6xXpSJQ_DE7IeDTTPEYcHXpH2AeeIDb57oCgQiJB-JigdzAQSFqiw"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"nome\" : \"Testing\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/equipe",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"equipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir férias",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIn0.pJBQ9dCW2mrokhxHYweiFkesYAvdtnpQ49LumYNsHhmnfESEetV5-Q_3d0fnO7rTEeXf-L11hKxnkUq8AfzT_A"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pessoa\": {\n        \"id\": 1\n    },\n    \"dataInicio\": \"2014-05-13T00:00:01.511Z\",\n    \"dataFim\": \"2014-06-01T00:01:01.511Z\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/ferias",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"ferias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ferias ByMatricula",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6InVzZXIifQ.EhmhKkXma4tAnvHm0PX6NoZJYvfnXl6eudKh5xGBWk7qijliitGn43Hq_VHixbeWvxEX2auauq5GFkmiC4rDYg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/ferias/getbymatricula/123456",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"ferias",
+						"getbymatricula",
+						"123456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Ferias",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6InVzZXIifQ.EhmhKkXma4tAnvHm0PX6NoZJYvfnXl6eudKh5xGBWk7qijliitGn43Hq_VHixbeWvxEX2auauq5GFkmiC4rDYg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/ferias",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"ferias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Funcionarios que sairao de ferias",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6InVzZXIifQ.EhmhKkXma4tAnvHm0PX6NoZJYvfnXl6eudKh5xGBWk7qijliitGn43Hq_VHixbeWvxEX2auauq5GFkmiC4rDYg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/pessoa/sairaodeferias/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"pessoa",
+						"sairaodeferias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Férias QRCODE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6InVzZXIifQ.EhmhKkXma4tAnvHm0PX6NoZJYvfnXl6eudKh5xGBWk7qijliitGn43Hq_VHixbeWvxEX2auauq5GFkmiC4rDYg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/rest/ferias/qrcode/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"ferias",
+						"qrcode",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir Funcionario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Token eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyb2JlcnNvbmZveEBnbWFpbC5jb20iLCJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIn0.pJBQ9dCW2mrokhxHYweiFkesYAvdtnpQ49LumYNsHhmnfESEetV5-Q_3d0fnO7rTEeXf-L11hKxnkUq8AfzT_A"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Robert Carlos\",\n    \"dataNascimento\": \"1984-06-15\",\n    \"dataContratacao\": \"2018-01-01\",\n    \"endereco\": {\n        \"logradouro\": \"Rua Itapema\",\n        \"numero\": 105,\n        \"bairro\": \"Lago Azul\",\n        \"cidade\": \"Ibirité\",\n        \"estado\": \"MG\"\n    },\n    \"equipe\": {\n        \"id\": 1\n    },\n    \"grupo\" : {\"id\": 1}\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/rest/pessoa",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rest",
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

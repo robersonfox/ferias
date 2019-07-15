@@ -7,17 +7,19 @@
 
 package br.com.robersonfox.security.jwtsecurity.controller;
 
-
+import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.server.UID;
+import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,30 +32,63 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.robersonfox.security.jwtsecurity.helper.SendEmailHelper;
 import br.com.robersonfox.security.jwtsecurity.helper.ZXingHelper;
+import br.com.robersonfox.security.jwtsecurity.model.app.Endereco;
+import br.com.robersonfox.security.jwtsecurity.model.app.Equipe;
 import br.com.robersonfox.security.jwtsecurity.model.app.Pessoa;
+import br.com.robersonfox.security.jwtsecurity.repository.EnderecoRepo;
+import br.com.robersonfox.security.jwtsecurity.repository.EquipeRepo;
 import br.com.robersonfox.security.jwtsecurity.repository.PessoaRepo;
 
 @RestController
 @RequestMapping("/rest/pessoa")
 public class PessoaController {
-
+	protected final static Logger logger = Logger.getLogger(PessoaController.class);
+	
     @Autowired
     private PessoaRepo pessoaRepo;
-    
-    // private JwtValidator validator = new JwtValidator();
+
+    @Autowired
+    private EnderecoRepo enderecoRepo;
+
+    @Autowired
+    private EquipeRepo equipeRepo;
 
     @PutMapping
     public ResponseEntity<?> inserirPessoa(@RequestBody final Pessoa pessoa) {
-    	String matricula = (String) createId();
-    	
-    	pessoa.setMatricula(Long.parseLong(matricula));
-    	
-    	//matricula gerada dia 14/07/19 587201611
-    	pessoaRepo.save(pessoa);
-    	
-    	
-    	return null;
+        String matricula = (String) createId();
+
+        Endereco endereco = trataEndereco(pessoa.getEndereco());
+        Equipe equipe = validaEquipe(pessoa.getEquipe());
+
+        if (equipe == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Equipe não encontrada");
+        }
+
+        pessoa.setEquipe(equipe);
+        pessoa.setId(null);
+        pessoa.setMatricula(Long.parseLong(matricula));
+        pessoa.setEndereco(endereco);
+        pessoa.setDataContratacao(new Date());
+
+        Pessoa p = pessoaRepo.save(pessoa);
+
+        if (p != null && p.getId() != null) {
+            SendEmailHelper sendEmail = new SendEmailHelper();
+            
+            try {
+                sendEmail.sendEmailWithAttachment(pessoa.getEmail(), p.getId());
+            } catch (MessagingException e) {
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O funcionário foi cadastrado, porém, não foi possível enviar email para este.");
+            } catch (IOException e) {
+            	logger.error(e);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(p);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível inserir");
+        }        
     }
     
     @PostMapping
@@ -82,16 +117,12 @@ public class PessoaController {
 	}
     
     public static synchronized Serializable createId() {
-        long now = System.currentTimeMillis();
+        Long verificador = System.currentTimeMillis()/1000;
+        String UID = String.valueOf(verificador);
         
-        Long verificador = Long.parseLong(String.valueOf(now));
-        
-        String UID = String.valueOf(now).substring(5,String.valueOf(now).length());
-         
         do {
         	verificador = geraValidator(verificador);
 		} while (verificador.toString().length() > 1);
-        
         
         return String.valueOf(UID + "" + verificador);
     }
@@ -104,6 +135,29 @@ public class PessoaController {
         	resultado = resultado + vl;
         }
         return resultado;
+    }
+
+    protected Endereco trataEndereco(Endereco endereco) {
+        Example<Endereco> criterio = Example.of(endereco);
+        Endereco e = enderecoRepo.findOne(criterio);
+
+        // Atualiza dados
+        if (e != null) {
+            endereco.setId(e.getId());
+        }
+
+        return enderecoRepo.save(endereco);
+    }
+
+    protected Equipe validaEquipe(Equipe equipe) {
+        Example<Equipe> criterio = Example.of(equipe);
+        Equipe e = equipeRepo.findOne(criterio);
+
+        if (e == null) {
+            return null;
+        }
+
+        return e;
     }
 }
 

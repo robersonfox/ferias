@@ -35,45 +35,48 @@ public class Pessoa implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+	private Endereco endereco;
+	
+	private String email;
 
-    private Date dataContratacao;
+	private Date dataContratacao;
 
-    @ManyToOne
-    @JoinColumn(name = "foto_id")
-    private FotoFuncionario foto;    
+	@ManyToOne
+	@JoinColumn(name = "foto_id")
+	private FotoFuncionario foto;
 
-    @ManyToOne
-    @JoinColumn(name = "equipe_id")
-    private Equipe equipe;
+	@ManyToOne
+	@JoinColumn(name = "equipe_id")
+	private Equipe equipe;
 
-    @ManyToOne
-    @JoinColumn(name = "grupo_id")
-    private Grupo grupo;
+	@ManyToOne
+	@JoinColumn(name = "grupo_id")
+	private Grupo grupo;
 
-    @JsonIgnoreProperties({"pessoa"})
-    @OneToMany(mappedBy = "pessoa")
-    private Set<Ferias> ferias;
+	@JsonIgnoreProperties({ "pessoa" })
+	@OneToMany(mappedBy = "pessoa")
+	private Set<Ferias> ferias;
 
 
-    public Pessoa() {
-    }
+	public Pessoa() {
+	}
 
-    public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, Date dataContratacao, FotoFuncionario foto, Equipe equipe, Grupo grupo, Set<Ferias> ferias) {
-        this.id = id;
-        this.matricula = matricula;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
-        this.dataContratacao = dataContratacao;
-        this.foto = foto;
-        this.equipe = equipe;
-        this.grupo = grupo;
-        this.ferias = ferias;
-    }
+	public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, String email, Date dataContratacao, FotoFuncionario foto, Equipe equipe, Grupo grupo, Set<Ferias> ferias) {
+		this.id = id;
+		this.matricula = matricula;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.endereco = endereco;
+		this.email = email;
+		this.dataContratacao = dataContratacao;
+		this.foto = foto;
+		this.equipe = equipe;
+		this.grupo = grupo;
+		this.ferias = ferias;
+	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -81,7 +84,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public Long getMatricula() {
-		return matricula;
+		return this.matricula;
 	}
 
 	public void setMatricula(Long matricula) {
@@ -89,7 +92,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	public void setNome(String nome) {
@@ -97,7 +100,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public Date getDataNascimento() {
-		return dataNascimento;
+		return this.dataNascimento;
 	}
 
 	public void setDataNascimento(Date dataNascimento) {
@@ -105,15 +108,23 @@ public class Pessoa implements Serializable {
 	}
 
 	public Endereco getEndereco() {
-		return endereco;
+		return this.endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Date getDataContratacao() {
-		return dataContratacao;
+		return this.dataContratacao;
 	}
 
 	public void setDataContratacao(Date dataContratacao) {
@@ -121,7 +132,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public FotoFuncionario getFoto() {
-		return foto;
+		return this.foto;
 	}
 
 	public void setFoto(FotoFuncionario foto) {
@@ -129,7 +140,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public Equipe getEquipe() {
-		return equipe;
+		return this.equipe;
 	}
 
 	public void setEquipe(Equipe equipe) {
@@ -137,7 +148,7 @@ public class Pessoa implements Serializable {
 	}
 
 	public Grupo getGrupo() {
-		return grupo;
+		return this.grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
@@ -145,15 +156,82 @@ public class Pessoa implements Serializable {
 	}
 
 	public Set<Ferias> getFerias() {
-		return ferias;
+		return this.ferias;
 	}
 
 	public void setFerias(Set<Ferias> ferias) {
 		this.ferias = ferias;
 	}
 
-	 
-    
-     
- 
+	public Pessoa id(Long id) {
+		this.id = id;
+		return this;
+	}
+
+	public Pessoa matricula(Long matricula) {
+		this.matricula = matricula;
+		return this;
+	}
+
+	public Pessoa nome(String nome) {
+		this.nome = nome;
+		return this;
+	}
+
+	public Pessoa dataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+		return this;
+	}
+
+	public Pessoa endereco(Endereco endereco) {
+		this.endereco = endereco;
+		return this;
+	}
+
+	public Pessoa email(String email) {
+		this.email = email;
+		return this;
+	}
+
+	public Pessoa dataContratacao(Date dataContratacao) {
+		this.dataContratacao = dataContratacao;
+		return this;
+	}
+
+	public Pessoa foto(FotoFuncionario foto) {
+		this.foto = foto;
+		return this;
+	}
+
+	public Pessoa equipe(Equipe equipe) {
+		this.equipe = equipe;
+		return this;
+	}
+
+	public Pessoa grupo(Grupo grupo) {
+		this.grupo = grupo;
+		return this;
+	}
+
+	public Pessoa ferias(Set<Ferias> ferias) {
+		this.ferias = ferias;
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+			" id='" + getId() + "'" +
+			", matricula='" + getMatricula() + "'" +
+			", nome='" + getNome() + "'" +
+			", dataNascimento='" + getDataNascimento() + "'" +
+			", endereco='" + getEndereco() + "'" +
+			", email='" + getEmail() + "'" +
+			", dataContratacao='" + getDataContratacao() + "'" +
+			", foto='" + getFoto() + "'" +
+			", equipe='" + getEquipe() + "'" +
+			", grupo='" + getGrupo() + "'" +
+			", ferias='" + getFerias() + "'" +
+			"}";
+	}
 }
