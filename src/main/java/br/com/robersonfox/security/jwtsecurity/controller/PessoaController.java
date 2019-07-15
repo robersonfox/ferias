@@ -45,10 +45,12 @@ public class PessoaController {
 
     @PutMapping
     public ResponseEntity<?> inserirPessoa(@RequestBody final Pessoa pessoa) {
-    	String uniqueID = (String) createId();
+    	String matricula = (String) createId();
     	
-    	pessoa.setMatricula(Long.parseLong(uniqueID));
+    	pessoa.setMatricula(Long.parseLong(matricula));
     	
+    	//matricula gerada dia 14/07/19 587201611
+    	pessoaRepo.save(pessoa);
     	
     	
     	return null;
@@ -81,7 +83,27 @@ public class PessoaController {
     
     public static synchronized Serializable createId() {
         long now = System.currentTimeMillis();
-        return String.valueOf(now);
+        
+        Long verificador = Long.parseLong(String.valueOf(now));
+        
+        String UID = String.valueOf(now).substring(5,String.valueOf(now).length());
+         
+        do {
+        	verificador = geraValidator(verificador);
+		} while (verificador.toString().length() > 1);
+        
+        
+        return String.valueOf(UID + "" + verificador);
+    }
+    
+    protected static Long geraValidator(Long verificador) {
+    	Long resultado = 0L;
+        for (int i = 0; i < verificador.toString().length(); i++) {
+        	char v = verificador.toString().charAt(i);
+        	Long vl = Long.parseLong(String.valueOf(v));
+        	resultado = resultado + vl;
+        }
+        return resultado;
     }
 }
 
