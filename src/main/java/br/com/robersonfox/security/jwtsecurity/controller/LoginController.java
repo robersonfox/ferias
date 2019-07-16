@@ -8,9 +8,14 @@
 package br.com.robersonfox.security.jwtsecurity.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +40,8 @@ public class LoginController {
         this.jwtGenerator = jwtGenerator;
     }
 
-    @PostMapping
-    public ResponseEntity<String> doLogin(@RequestBody final Login user) {
+    @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> doLogin(@RequestBody final Login user) {
 
         String usuario = user.getLogin();
         String senha = user.getSenha();
@@ -49,14 +54,22 @@ public class LoginController {
         Login login = loginRepo.findOne(criterio);
 
         if (login != null) {
+            Map<String, String> map = new HashMap<String, String>();
+
             JwtUser jwtUser = new JwtUser();
             jwtUser.setId(login.getId());
             jwtUser.setUserName(login.getLogin());
             jwtUser.setRole(login.getPessoa().getGrupo().getNome());
             
             String jwt = jwtGenerator.generate(jwtUser);
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Set-Cookie","Tokiuz=" + "Token " + jwt);
+            headers.add("Autorization", "Token " + jwt);
+           
+            map.put("Tokiuz", jwt);
 
-            return ResponseEntity.status(HttpStatus.OK).header("Autorization", "Token " + jwt).build();
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

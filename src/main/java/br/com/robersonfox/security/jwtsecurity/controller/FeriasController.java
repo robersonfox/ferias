@@ -26,10 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.robersonfox.security.jwtsecurity.helper.ZXingHelper;
 import br.com.robersonfox.security.jwtsecurity.model.app.Equipe;
 import br.com.robersonfox.security.jwtsecurity.model.app.Ferias;
 import br.com.robersonfox.security.jwtsecurity.model.app.Pessoa;
@@ -140,11 +138,4 @@ public class FeriasController {
           .atZone(ZoneId.systemDefault())
           .toLocalDate();
     }
-    
-    @RequestMapping(value = "qrcode/{id}", method = RequestMethod.GET)
-	public void qrcode(@PathVariable("id") Long id, HttpServletResponse response) throws Exception {
-    	Ferias ferias = feriasRepo.findOne(id);
-    	
-    	ZXingHelper.getPNG(ferias.toString(), response);
-	}
 }
