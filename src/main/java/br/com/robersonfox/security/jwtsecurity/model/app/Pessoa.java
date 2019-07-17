@@ -18,8 +18,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -27,18 +31,20 @@ public class Pessoa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	private Long id;
+	
     private Long matricula;
-    
-    private String nome;
+	
+	@NotBlank
+	private String nome;
+	
+	@NotNull
     private Date dataNascimento;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 	
-	private String email;
-
 	private Date dataContratacao;
 
 	@ManyToOne
@@ -49,30 +55,36 @@ public class Pessoa implements Serializable {
 	@JoinColumn(name = "equipe_id")
 	private Equipe equipe;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "grupo_id")
 	private Grupo grupo;
 
-	@JsonIgnoreProperties({ "pessoa" })
+	@JsonIgnoreProperties({"pessoa"})
 	@OneToMany(mappedBy = "pessoa")
 	private Set<Ferias> ferias;
+	
+	@OneToOne
+	@JsonIgnoreProperties({"pessoa"})
+	@JoinColumn(name = "login_id")
+	private Login login;
 
+	public Pessoa() {}
 
-	public Pessoa() {
-	}
-
-	public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, String email, Date dataContratacao, FotoFuncionario foto, Equipe equipe, Grupo grupo, Set<Ferias> ferias) {
+	public Pessoa(Long id, Long matricula, String nome, Date dataNascimento, Endereco endereco, String email, 
+			Date dataContratacao, FotoFuncionario foto, Equipe equipe, 
+			Grupo grupo, Set<Ferias> ferias, Login login) {
 		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.endereco = endereco;
-		this.email = email;
 		this.dataContratacao = dataContratacao;
 		this.foto = foto;
 		this.equipe = equipe;
 		this.grupo = grupo;
 		this.ferias = ferias;
+		this.login = login;
 	}
 
 	public Long getId() {
@@ -113,14 +125,6 @@ public class Pessoa implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public Date getDataContratacao() {
@@ -188,11 +192,6 @@ public class Pessoa implements Serializable {
 		return this;
 	}
 
-	public Pessoa email(String email) {
-		this.email = email;
-		return this;
-	}
-
 	public Pessoa dataContratacao(Date dataContratacao) {
 		this.dataContratacao = dataContratacao;
 		return this;
@@ -213,6 +212,16 @@ public class Pessoa implements Serializable {
 		return this;
 	}
 
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+	
+	
 	public Pessoa ferias(Set<Ferias> ferias) {
 		this.ferias = ferias;
 		return this;
@@ -226,7 +235,6 @@ public class Pessoa implements Serializable {
 			", nome='" + getNome() + "'" +
 			", dataNascimento='" + getDataNascimento() + "'" +
 			", endereco='" + getEndereco() + "'" +
-			", email='" + getEmail() + "'" +
 			", dataContratacao='" + getDataContratacao() + "'" +
 			", foto='" + getFoto() + "'" +
 			", equipe='" + getEquipe() + "'" +

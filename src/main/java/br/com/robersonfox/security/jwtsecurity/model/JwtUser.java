@@ -4,9 +4,18 @@ public class JwtUser {
     private String userName;
     private long id;
     private String role;
+    private Long idPessoa;
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Long getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Long idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
     public void setId(long id) {

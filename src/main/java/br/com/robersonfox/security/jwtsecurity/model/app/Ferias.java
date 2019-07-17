@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,13 +29,17 @@ public class Ferias implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JsonIgnoreProperties({"ferias"})
+	@NotNull
+	@ManyToOne 
+    @JsonIgnoreProperties("ferias")
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     private Pessoa pessoa;
 
+	@NotNull
     private Date dataInicio;
-    private Date dataFim;
+	
+	@NotNull
+	private Date dataFim;
     
     public Ferias() {
     }
