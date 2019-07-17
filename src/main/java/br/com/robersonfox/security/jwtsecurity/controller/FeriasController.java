@@ -118,10 +118,14 @@ public class FeriasController {
         return ResponseEntity.status(HttpStatus.OK).body(ferias);  
     }
     
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestBody final Ferias ferias) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") final Long idFerias) {
+        Ferias ferias = new Ferias();
+        ferias.setId(idFerias);
+
     	feriasRepo.delete(ferias);
-    	return ResponseEntity.status(HttpStatus.OK).body("Removido");
+        
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
     
     public static ResponseEntity<String> trataError(HttpStatus status, String mensagem) {
