@@ -7,3 +7,5 @@ spring:
   resources:
     chain:
       enabled: true
+
+spring.mvc.dispatch-options-request: true

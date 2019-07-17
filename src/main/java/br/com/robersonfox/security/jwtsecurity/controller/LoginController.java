@@ -8,6 +8,7 @@
 package br.com.robersonfox.security.jwtsecurity.controller;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.robersonfox.security.jwtsecurity.helper.Criptador;
 import br.com.robersonfox.security.jwtsecurity.model.JwtUser;
 import br.com.robersonfox.security.jwtsecurity.model.app.Login;
 import br.com.robersonfox.security.jwtsecurity.repository.LoginRepo;
@@ -40,26 +42,30 @@ public class LoginController {
         this.jwtGenerator = jwtGenerator;
     }
 
-    @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> doLogin(@RequestBody final Login user) {
+        Criptador criptador = new Criptador();
 
-        String usuario = user.getLogin();
-        String senha = user.getSenha();
-        
         Login dummyLogin = new Login();
-        dummyLogin.setLogin(usuario);
+        String senha = criptador.encoder(user.getSenha());
+        
+        dummyLogin.setEmail(user.getEmail());
         dummyLogin.setSenha(senha);
 
         Example<Login> criterio = Example.of(dummyLogin);
         Login login = loginRepo.findOne(criterio);
 
         if (login != null) {
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<>();
+            
+            Long idPessoa = login.getPessoa().getId();
+            String role = login.getPessoa().getGrupo().getNome();
 
             JwtUser jwtUser = new JwtUser();
             jwtUser.setId(login.getId());
-            jwtUser.setUserName(login.getLogin());
-            jwtUser.setRole(login.getPessoa().getGrupo().getNome());
+            jwtUser.setUserName(login.getEmail());
+            jwtUser.setRole(role);
+            jwtUser.setIdPessoa(idPessoa);
             
             String jwt = jwtGenerator.generate(jwtUser);
             
